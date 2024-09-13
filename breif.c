@@ -79,11 +79,11 @@ void list_departement(char *departement_choix)
 
 void liste_statiques()
 {
-    printf("1-Afficher le nombre total d'étudiants inscrits. \n");
-    printf("\t\t 2-Afficher le nombre d'étudiants dans chaque département. \n");
-    printf("\t\t 3-Afficher les étudiants ayant une moyenne générale supérieure à un certain seuil. \n");
-    printf("\t\t 4-Afficher les 3 étudiants ayant les meilleures notes. \n");
-    printf("\t\t 5-Afficher le nombre d'étudiants ayant réussi dans chaque département . \n");
+    printf("1-Afficher le nombre total d'Ã©tudiants inscrits. \n");
+    printf("\t\t 2-Afficher le nombre d'Ã©tudiants dans chaque dÃ©partement. \n");
+    printf("\t\t 3-Afficher les Ã©tudiants ayant une moyenne gÃ©nÃ©rale supÃ©rieure Ã  un certain seuil. \n");
+    printf("\t\t 4-Afficher les 3 Ã©tudiants ayant les meilleures notes. \n");
+    printf("\t\t 5-Afficher le nombre d'Ã©tudiants ayant rÃ©ussi dans chaque dÃ©partement . \n");
     printf("\t\t 6-Retour.\n");
 }
 
@@ -92,7 +92,6 @@ void liste_de_tri(int *tri)
     printf("\t\t 1-Tri alphabetique des etudiants en fonction de leur nom.\n");
     printf("\t\t 2-Tri des etudiants par moyenne generale du plus eleve au plus faible. \n");
     printf("\t\t 3-Tri des etudiants selon leur statut de reussite. \n");
-    printf("\t\t 3-Retour. \n");
     printf("entrer votre choix :  \n");
     scanf("%d", tri);
 }
@@ -184,9 +183,6 @@ void modifier(struct etudiants etudiant[], int *n)
                 etudiant[i].note_general = new_note_general;
                 printf("La note generale mise a jour avec succes.\n");
                 break;
-            case 8:
-                exit(1);
-                break;
             default:
                 printf("Votre choix est incorrect. Ressayez.\n");
             }
@@ -213,7 +209,7 @@ int recherche_etudiant(struct etudiants etudiant[],int id, int n)
 void supprimer(struct etudiants etudiant[], int *n)
 {
     int index,id;
-    printf("Entrer identite de l'etudiant à supprimer :  ");
+    printf("Entrer identite de l'etudiant Ã  supprimer :  ");
     scanf("%d", &id);
     index = recherche_etudiant(etudiant,id,*n);
 
@@ -335,6 +331,8 @@ void statistique(struct etudiants etudiant[], int n)
 {
     int counter = 0;
     int physique=0,math=0,info=0,geo=0,chimie=0,bio=0;
+     int physique_reussi = 0, math_reussi = 0, info_reussi = 0, geo_reussi = 0, chimie_reussi = 0, bio_reussi = 0;
+
 //voir tous les etudians inscrits
 
     for(int i=0; i<n; i++)
@@ -377,7 +375,7 @@ void statistique(struct etudiants etudiant[], int n)
     printf("\tLe nombre d'etudiants inscrit dans Mathematiques sont : %d\n", math);
     printf("\tLe nombre d'etudiants inscrit dans Physique sont : %d\n", physique);
 
-//Afficher les étudiants ayant une moyenne générale supérieure à un certain seuil.
+//Afficher les Ã©tudiants ayant une moyenne gÃ©nÃ©rale supÃ©rieure Ã  un certain seuil.
     float seuil;
     printf("entrer la seuil : ");
     scanf("%f", &seuil);
@@ -395,9 +393,50 @@ void statistique(struct etudiants etudiant[], int n)
             printf("\n\n=========================================================================================");
         }
     }
-//Afficher les 3 étudiants ayant les meilleures notes.
+    for (int i = 0; i < n; i++)
+    {
 
+        if (strcasecmp(etudiant[i].departement, "physique") == 0)
+        {
+            if (etudiant[i].note_general >= 10)
+                physique_reussi++;
+        }
+        else if (strcasecmp(etudiant[i].departement, "mathematiques") == 0)
+        {
+            if (etudiant[i].note_general >= 10)
+                math_reussi++;
+        }
+        else if (strcasecmp(etudiant[i].departement, "informatique") == 0)
+        {
+            if (etudiant[i].note_general >= 10)
+                info_reussi++;
+        }
+        else if (strcasecmp(etudiant[i].departement, "geologie") == 0)
+        {
+            if (etudiant[i].note_general >= 10)
+                geo_reussi++;
+        }
+        else if (strcasecmp(etudiant[i].departement, "chimie") == 0)
+        {
+            if (etudiant[i].note_general >= 10)
+                chimie_reussi++;
+        }
+        else if (strcasecmp(etudiant[i].departement, "biologie") == 0)
+        {
+            if (etudiant[i].note_general >= 10)
+                bio_reussi++;
+        }
+    }
+
+    printf("\n\tLe nombre d'etudiants inscrit dans Biologie : %d (Reussis : %d)\n", bio, bio_reussi);
+    printf("\tLe nombre d'etudiants inscrit dans Chimie : %d (Reussis : %d)\n", chimie, chimie_reussi);
+    printf("\tLe nombre d'etudiants inscrit dans Geologie : %d (Reussis : %d)\n", geo, geo_reussi);
+    printf("\tLe nombre d'etudiants inscrit dans Informatique : %d (Reussis : %d)\n", info, info_reussi);
+    printf("\tLe nombre d'etudiants inscrit dans Mathematiques : %d (Reussis : %d)\n", math, math_reussi);
+    printf("\tLe nombre d'etudiants inscrit dans Physique : %d (Reussis : %d)\n", physique, physique_reussi);
 }
+
+//Afficher les 3 Ã©tudiants ayant les meilleures notes.
 void trier_par_note(struct etudiants etudiant[], int n)
 {
     struct etudiants temp;
@@ -474,7 +513,7 @@ void affichier_les_etudiants(struct etudiants etudiant[], int n)
         printf("\nDate de naissance : %s",etudiant[i].date_de_nessance);
         printf("\nDepartement : %s",etudiant[i].departement);
         printf("\nNote general: %.2f",etudiant[i].note_general);
-        printf("\n\n=========================================================================================");
+        printf("\n\n=========================================================================================\n");
     }
 }
 
@@ -482,9 +521,9 @@ void afficher_etudiant_par_departement(struct etudiants etudiant[], int n)
 {
     char departement_choix[50];
     int found;
-    printf("\n==== Afficher les étudiants par département ====\n");
+    printf("\n==== Afficher les Ã©tudiants par dÃ©partement ====\n");
     list_departement(departement_choix);
-    printf("\nListe des étudiants inscrits en %s:\n", departement_choix);
+    printf("\nListe des Ã©tudiants inscrits en %s:\n", departement_choix);
     for (int i = 0; i < n; i++)
     {
         if (strcasecmp(etudiant[i].departement, departement_choix) == 0)
@@ -504,7 +543,7 @@ void afficher_etudiant_par_departement(struct etudiants etudiant[], int n)
 
     if (!found)
     {
-        printf("\nAucun étudiant trouvé dans le département %s.\n", departement_choix);
+        printf("\nAucun Ã©tudiant trouvÃ© dans le dÃ©partement %s.\n", departement_choix);
     }
 
 }
@@ -515,7 +554,7 @@ void tri_par_nom(struct etudiants etudiant[], int n)
     {
         for (int j = i + 1; j < n; j++)
         {
-            if (strcmp(etudiant[i].nom, etudiant[j].nom) > 0)
+            if (strcasecmp(etudiant[i].nom, etudiant[j].nom) > 0)
             {
                 struct etudiants temp = etudiant[i];
                 etudiant[i] = etudiant[j];
@@ -663,6 +702,10 @@ int main()
             break;
         case 7:
             trier_un_etudiant(etudiant, n);
+            break;
+        case 8:
+            printf("\tVous avez quitte.");
+            exit(1);
             break;
         default:
             printf("votre choix n'est pas dans la liste.");
